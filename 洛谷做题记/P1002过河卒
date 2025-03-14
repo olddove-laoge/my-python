@@ -1,0 +1,16 @@
+datas = list(map(int, input().split()))
+board = [[0 for i in range(30)] for j in range(30)]
+direction_horse = [[1,2],[2,1],[-1,2],[-2,1],[2,-1],[1,-2],[-1,-2],[-2,-1]]
+board[0][0] = 1
+
+for i in range(30):
+    for j in range(30):
+        if i > 0:
+            board[i][j] += board[i-1][j]
+        if j > 0:
+            board[i][j] += board[i][j-1]
+        for dx,dy in direction_horse:
+            if (i == datas[2]+dx and j == datas[3]+dy) or (i == datas[2] and j == datas[3]):
+                board[i][j] = 0 
+
+print(board[datas[0]][datas[1]])
