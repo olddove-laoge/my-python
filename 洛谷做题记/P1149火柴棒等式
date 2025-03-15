@@ -1,0 +1,29 @@
+
+# 每个数字0-9所需的火柴数
+numbers = [6, 2, 5, 5, 4, 5, 6, 3, 7, 6]
+
+# 预计算0-2000每个数字所需的火柴数
+max_num = 2000
+extend_numbers = [0] * (max_num + 1)
+for i in range(max_num + 1):
+    for digit in str(i):
+        extend_numbers[i] += numbers[int(digit)]
+
+n = int(input())
+count = 0
+
+# 遍历所有可能的A和B，计算C = A + B
+for a in range(max_num + 1):
+    for b in range(max_num + 1):
+        c = a + b
+        if c > max_num:
+            continue  # 如果C超过预计算范围，跳过
+        # 计算总火柴数，包括加号和等号的4根
+        total = extend_numbers[a] + extend_numbers[b] + extend_numbers[c] + 4
+        if total == n:
+            # 检查A和B是否有效（非零时不能以0开头）
+            if (a != 0 and str(a)[0] == '0') or (b != 0 and str(b)[0] == '0') or (c != 0 and str(c)[0] == '0'):
+                continue
+            count += 1
+
+print(count)
